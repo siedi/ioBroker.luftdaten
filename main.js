@@ -27,7 +27,8 @@ class Luftdaten extends utils.Adapter {
         const sensorName = (this.config.sensorName === '') ? sensorIdentifier : this.config.sensorName;
 
         if (sensorIdentifier && sensorName) {
-            const path = (sensorType == 'local') ? sensorIdentifier.replace(/\./g, '_') + '.' : sensorIdentifier + '.';
+            const deviceName = (sensorType == 'local') ? sensorIdentifier.replace(/\./g, '_') : sensorIdentifier;
+            const path =  deviceName + '.';
 
             const unitList = {
                 P1: 'µg/m³',
@@ -56,6 +57,8 @@ class Luftdaten extends utils.Adapter {
             };
 
             this.log.debug('sensor type: ' + sensorType + ', sensor identifier: ' + sensorIdentifier + ', sensor name: ' + sensorName);
+
+            this.createDevice(deviceName);
 
             this.setObjectNotExists(path + 'name', {
                 type: 'state',
